@@ -1,41 +1,20 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:7
-    container_name: eecs4413-mongo
-    restart: unless-stopped
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password123
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-      - ./mongodb-backup:/docker-entrypoint-initdb.d/backup:ro
-      - ./mongodb-init/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
-    networks:
-      - eecs4413-network
-
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: eecs4413-backend
     restart: unless-stopped
-    ports:
-      - "4000:4000"
+    network_mode: "host"
     environment:
-      - MONGODB_URI=mongodb://admin:password123@mongodb:27017/eecs4413store?authSource=admin
+      - MONGODB_URI=mongodb+srv://eecs4413user:I417hSR9UCuiRrkh@eecs4413-cluster.fpabm1l.mongodb.net/eecs4413store?retryWrites=true&w=majority
       - JWT_SECRET=supersecret_eecs4413_store_123
       - ADMIN_EMAIL=campustech@my.yorku.ca
       - PORT=4000
-    depends_on:
-      - mongodb
     volumes:
       - ./backend/uploads:/app/uploads
-    networks:
-      - eecs4413-network
 
   frontend:
     build:
@@ -49,9 +28,6 @@ services:
       - backend
     networks:
       - eecs4413-network
-
-volumes:
-  mongo-data:
 
 networks:
   eecs4413-network:
