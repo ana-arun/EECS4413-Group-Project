@@ -309,11 +309,6 @@ The database seeds with sample products on first run (iPad, Laptop, Little Princ
 
 This project is for educational purposes (EECS4413 course project).
 
-## Team
-
-- Frontend Developer: [Your Name]
-- Backend Developer: [Your Name]
-- Database & Deployment: [Your Name]
 
 ## Acknowledgments
 
