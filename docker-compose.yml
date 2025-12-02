@@ -7,7 +7,8 @@ services:
       dockerfile: Dockerfile
     container_name: eecs4413-backend
     restart: unless-stopped
-    network_mode: "host"
+    ports:
+      - "4000:4000"
     environment:
       - MONGODB_URI=mongodb+srv://eecs4413user:I417hSR9UCuiRrkh@eecs4413-cluster.fpabm1l.mongodb.net/eecs4413store?retryWrites=true&w=majority
       - JWT_SECRET=supersecret_eecs4413_store_123
@@ -15,6 +16,8 @@ services:
       - PORT=4000
     volumes:
       - ./backend/uploads:/app/uploads
+    networks:
+      - eecs4413-network
 
   frontend:
     build:
