@@ -49,16 +49,15 @@ A full-stack e-commerce application for buying and selling campus tech products,
 **Steps:**
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/ana-arun/EECS4413-Group-Project.git
 cd eecs4413-store
 
 # Start everything with one command
-docker compose up --build
+docker-compose up
 
 # Access the application
-# Frontend: http://localhost
-# Backend API: http://localhost:4000
-# MongoDB: localhost:27017
+http://localhost
+
 ```
 
 **Default Admin Account:**
