@@ -218,27 +218,57 @@ export default function AdminPage() {
               ))}
             </div>
           )}
-
-          {selectedOrder && (
-            <div style={{ marginTop: 12 }} className="card">
-              <h4>Order Details</h4>
-              <div><strong>User:</strong> {selectedOrder.user}</div>
-              <div><strong>Placed:</strong> {new Date(selectedOrder.createdAt).toLocaleString()}</div>
-              <div style={{ marginTop: 8 }}>
-                <strong>Items</strong>
-                <ul>
-                  {selectedOrder.items.map(it => (
-                    <li key={it._id || it.item._id}>{it.item?.name || 'Item'} — {it.quantity} × ${it.priceAtPurchase ?? it.item?.price}</li>
-                  ))}
-                </ul>
-              </div>
-              <div style={{ marginTop: 8 }}><strong>Total:</strong> ${selectedOrder.totalAmount}</div>
-              <div style={{ marginTop: 8 }}>
-                <button className="btn-secondary" onClick={() => setSelectedOrder(null)}>Close</button>
-              </div>
-            </div>
-          )}
         </section>
+      )}
+
+      {/* Order Details Modal - Outside tab sections */}
+      {selectedOrder && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }} onClick={() => setSelectedOrder(null)}>
+          <div className="card" style={{ maxWidth: 600, maxHeight: '80vh', overflow: 'auto', margin: 20 }} onClick={(e) => e.stopPropagation()}>
+            <h4>Order Details</h4>
+            <div><strong>User:</strong> {selectedOrder.user?.name || selectedOrder.user?.email || selectedOrder.user}</div>
+            <div><strong>Placed:</strong> {new Date(selectedOrder.createdAt).toLocaleString()}</div>
+            <div style={{ marginTop: 8 }}>
+              <strong>Items</strong>
+              <ul>
+                {selectedOrder.items?.map((it, idx) => (
+                  <li key={it._id || it.item?._id || idx}>{it.item?.name || 'Item'} — {it.quantity} × ${it.priceAtPurchase ?? it.item?.price}</li>
+                ))}
+              </ul>
+            </div>
+            <div style={{ marginTop: 8 }}><strong>Total:</strong> ${selectedOrder.totalAmount}</div>
+            {selectedOrder.shipping && (
+              <div style={{ marginTop: 8 }}>
+                <strong>Shipping Address:</strong>
+                <div style={{ marginLeft: '1rem', marginTop: '0.5rem' }}>
+                  {selectedOrder.shipping.fullName}<br />
+                  {selectedOrder.shipping.address}<br />
+                  {selectedOrder.shipping.city}, {selectedOrder.shipping.postalCode}<br />
+                  {selectedOrder.shipping.country}
+                </div>
+              </div>
+            )}
+            {selectedOrder.payment && (
+              <div style={{ marginTop: 8 }}>
+                <strong>Payment:</strong> {selectedOrder.payment.cardBrand} ending in {selectedOrder.payment.last4}
+              </div>
+            )}
+            <div style={{ marginTop: 8 }}>
+              <button className="btn-secondary" onClick={() => setSelectedOrder(null)}>Close</button>
+            </div>
+          </div>
+        </div>
       )}
 
       {tab === 'inventory' && (

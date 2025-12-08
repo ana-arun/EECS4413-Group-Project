@@ -86,7 +86,11 @@ router.get('/admin/all', authRequired, async (req, res) => {
     if (from) q.createdAt.$gte = new Date(from);
     if (to) q.createdAt.$lte = new Date(to);
 
-    const orders = await Order.find(q).populate('items.item').sort({ createdAt: -1 });
+    const orders = await Order.find(q)
+      .populate('items.item')
+      .populate('user', 'email name')
+      .sort({ createdAt: -1 })
+      .lean();
     res.json(orders);
   } catch (err) {
     console.error('Error fetching admin orders:', err);
