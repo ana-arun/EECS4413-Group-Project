@@ -48,7 +48,12 @@ async function placeOrder(userId, shipping = null, payment = null) {
   cart.items = [];
   await cart.save();
 
-  return order;
+  // Populate item details before returning
+  const populatedOrder = await Order.findById(order._id)
+    .populate('items.item')
+    .lean();
+  
+  return populatedOrder;
 }
 
 async function getOrdersByUser(userId) {

@@ -3,7 +3,8 @@ const orderDao = require('../dao/orderDao');
 // POST /api/orders/checkout
 async function checkout(req, res) {
   try {
-    const order = await orderDao.placeOrder(req.user.id);
+    const { shipping, payment } = req.body;
+    const order = await orderDao.placeOrder(req.user.id, shipping, payment);
     res.json(order);
   } catch (err) {
     console.error('Checkout error:', err);
