@@ -50,7 +50,7 @@ A full-stack e-commerce application for buying and selling campus tech products,
 ```bash
 # Clone the repository
 git clone https://github.com/ana-arun/EECS4413-Group-Project.git
-cd eecs4413-store
+cd EECS4413-Group-Project
 
 # Start everything with one command
 docker-compose up
