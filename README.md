@@ -41,10 +41,10 @@ A full-stack e-commerce application for buying and selling campus tech products,
 
 ## Quick Start
 
-### Option 1: Docker (Recommended - One Command!)
+### Option 1: Docker (Recommended - One Command!) + git installed
 
 **Requirements:**
-- Docker Desktop installed ([Download](https://www.docker.com/products/docker-desktop))
+- Docker Desktop installed ([Download](https://www.docker.com/products/docker-desktop)), no need to sign up just have it open and that is all that is needed and just run the below commands in your terminal.
 
 **Steps:**
 ```bash
